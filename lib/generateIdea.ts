@@ -11,14 +11,28 @@ const google = createGoogleGenerativeAI({
 	apiKey: GEMINI_API_KEY,
 });
 
-type ProjectIdea = {
+export type ProjectIdea = {
+	name: string;
+	problem: string;
+	solution: string;
+	thinking_process?: string;
+	technical_approach?: string;
+	tools_required?: string[];
+	potential_challenges?: string;
+	future_extensions?: string;
+};
+
+type GenerateInput = {
 	skills: string[];
 	interests: string[];
 };
 
-export async function generateProjectIdea({ skills, interests }: ProjectIdea) {
+export async function generateProjectIdea({
+	skills,
+	interests,
+}: GenerateInput): Promise<ProjectIdea[]> {
 	const prompt = `
-Generate 3 innovative project ideas combining these skills and interests. For each idea, provide:  
+Generate 3-5 innovative project ideas combining these skills and interests. For each idea, provide:  
 
 **Skills:** ${skills.join(", ")}  
 **Interests:** ${interests.join(", ")}  
@@ -52,7 +66,8 @@ For each idea, include:
   "future_extensions": "Add weekly analytics or integrate with Slack/Teams."  
 }  
 
-Generate 3 ideas in this exact format. Prioritize originality and feasibility.  
+Generate 3-5 ideas in this exact format. Prioritize originality and feasibility.  
+Format your response as a JSON array (no markdown, no backticks). Only return the array.
 `;
 
 	const result = await generateText({
@@ -65,5 +80,20 @@ Generate 3 ideas in this exact format. Prioritize originality and feasibility.
 		prompt,
 	});
 
-	return result.text;
+	try {
+		const raw = result.text.trim();
+
+		// Attempt to parse, after cleaning unwanted wrapping like markdown code blocks
+		const clean = raw.replace(/^```json|```$/g, "").trim();
+		const ideas = JSON.parse(clean);
+
+		if (!Array.isArray(ideas)) {
+			throw new Error("Generated response is not an array.");
+		}
+
+		return ideas;
+	} catch (error) {
+		console.error("Failed to parse AI response:", error);
+		throw new Error("AI response could not be parsed as valid JSON.");
+	}
 }
