@@ -3,7 +3,7 @@
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 
-export async function getRecentIdeas() {
+export async function getRecentIdeas(page: number = 1, pageSize: number = 10) {
 	const session = await getServerSession();
 
 	if (!session) {
@@ -21,23 +21,34 @@ export async function getRecentIdeas() {
 			throw new Error("User not found");
 		}
 
-		const recentIdeas = await prisma.projectIdea.findMany({
-			where: {
-				userId: findUser.id,
-			},
-			orderBy: {
-				createdAt: "desc",
-			},
-			select: {
-				id: true,
-				publicId: true,
-				title: true,
-				description: true,
-				createdAt: true,
-			},
-		});
+		const skip = (page - 1) * pageSize;
 
-		return recentIdeas;
+		const [ideas, total] = await Promise.all([
+			prisma.projectIdea.findMany({
+				where: { userId: findUser.id },
+				orderBy: { createdAt: "desc" },
+				skip,
+				take: pageSize,
+				select: {
+					id: true,
+					publicId: true,
+					title: true,
+					description: true,
+					createdAt: true,
+				},
+			}),
+			prisma.projectIdea.count({
+				where: { userId: findUser.id },
+			}),
+		]);
+
+		return {
+			ideas,
+			page,
+			pageSize,
+			totalPages: Math.ceil(total / pageSize),
+			totalItems: total,
+		};
 	} catch (error) {
 		console.error("Error fetching recent ideas:", error);
 		throw error;

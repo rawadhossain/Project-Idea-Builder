@@ -13,8 +13,8 @@ export async function GET(req: Request, { params }: { params: params }) {
 	}
 
 	try {
-		const idea = await prisma.projectIdea.findUnique({
-			where: { publicId: params.publicId, isPublic: true },
+		const idea = await prisma.projectIdea.findFirst({
+			where: { publicId, isPublic: true },
 			select: {
 				title: true,
 				description: true,
