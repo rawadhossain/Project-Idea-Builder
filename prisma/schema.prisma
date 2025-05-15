@@ -52,6 +52,7 @@ model ProjectIdea {
   isFavorite     Boolean  @default(false)
   isPublic       Boolean  @default(false) // control visibility
   favorites      Favorite[]
+  chat           ProjectIdeaChat[]
 }
 
 
@@ -62,4 +63,13 @@ model Favorite {
   userId    String
   user      User         @relation(fields: [userId], references: [id])
   createdAt DateTime    @default(now())
+}
+
+model ProjectIdeaChat{
+  id        String @id @default(cuid())
+  ideaId    String
+  idea      ProjectIdea @relation(fields: [ideaId], references: [id])
+  sender    String // user or assistant
+  message   String //chat content
+  createdAt DateTime @default(now())
 }

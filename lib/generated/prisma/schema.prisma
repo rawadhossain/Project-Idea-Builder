@@ -16,7 +16,8 @@ datasource db {
 
 model User {
   id        String        @id @default(cuid())
-  email     String        @unique
+  email     String?       @unique
+  password  String
   skills    Skill[]
   interests Interest[]
   ideas     ProjectIdea[]
@@ -39,18 +40,19 @@ model Interest {
 }
 
 model ProjectIdea {
-  id             String     @id @default(cuid())
-  publicId       String     @unique @default(uuid()) // public-friendly ID
+  id             String            @id @default(cuid())
+  publicId       String?           @unique @default(uuid()) // public-friendly ID
   title          String
   description    String
   inputSkills    String[]
   inputInterests String[]
   userId         String
-  user           User       @relation(fields: [userId], references: [id])
-  createdAt      DateTime   @default(now())
-  isFavorite     Boolean    @default(false)
-  isPublic       Boolean    @default(false) // control visibility
+  user           User              @relation(fields: [userId], references: [id])
+  createdAt      DateTime          @default(now())
+  isFavorite     Boolean           @default(false)
+  isPublic       Boolean           @default(false) // control visibility
   favorites      Favorite[]
+  chat           ProjectIdeaChat[]
 }
 
 model Favorite {
@@ -59,5 +61,14 @@ model Favorite {
   idea      ProjectIdea @relation(fields: [ideaId], references: [id])
   userId    String
   user      User        @relation(fields: [userId], references: [id])
+  createdAt DateTime    @default(now())
+}
+
+model ProjectIdeaChat {
+  id        String      @id @default(cuid())
+  ideaId    String
+  idea      ProjectIdea @relation(fields: [ideaId], references: [id])
+  sender    String // user or assistant
+  message   String //chat content
   createdAt DateTime    @default(now())
 }

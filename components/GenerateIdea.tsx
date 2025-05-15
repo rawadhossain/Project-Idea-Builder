@@ -1,13 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Sparkles } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { DisplaySkills } from "./displaySkills";
+import { DisplayInterest } from "./dsiplayInterests";
 
 const formSchema = z.object({
 	skills: z.string().array(),
@@ -45,29 +47,47 @@ export default function GenerateIdea() {
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			skills: [],
-			interests: [],
+			skills: [""],
+			interests: [""],
 		},
 	});
 
 	const onSubmit = async (data: FormValues) => {
 		setLoading(true);
-		const response = await fetch("/api/idea", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		});
-		const idea = await response.json();
-		setLoading(false);
-		router.push(`/idea/${idea.id}`);
+
+		try {
+			// Send the form data to the API
+			const response = await fetch("/api/idea", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					...data,
+					isPublic: false, // Default to private; adjust based on user input if needed
+				}),
+			});
+
+			// Handle the response
+			if (!response.ok) {
+				throw new Error("Failed to create idea");
+			}
+
+			const idea = await response.json();
+
+			// Redirect to the idea page using the publicId
+			router.push(`/idea/${idea.publicId}`);
+		} catch (error) {
+			console.error("Error creating idea:", error);
+		} finally {
+			setLoading(false);
+		}
 	};
 
 	return (
-		<div>
+		<div className="container mx-auto px-4 mt-2">
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 py-4">
+				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-24 py-4">
 					{/* Skills */}
 					<FormField
 						control={form.control}
@@ -75,18 +95,19 @@ export default function GenerateIdea() {
 						render={({ field }) => (
 							<FormItem className="col-span-4 flex flex-col gap-2">
 								<FormControl>
-									<div className="flex gap-1">
+									<div className="flex gap-3">
 										<Input
 											{...field}
 											className="col-span-3"
 											placeholder="Add your skills"
 										/>
 										<Button type="submit">
-											<Plus className="mr-2 h-5 w-5" />
+											<Plus />
 										</Button>
 									</div>
 								</FormControl>
-								<FormMessage className="col-start-2 col-span-3" />
+								{/* Display the skills list */}
+								<DisplaySkills skills={skillsList} />
 							</FormItem>
 						)}
 					/>
@@ -98,7 +119,7 @@ export default function GenerateIdea() {
 						render={({ field }) => (
 							<FormItem className="col-span-4 flex flex-col gap-2">
 								<FormControl>
-									<div className="flex gap-1">
+									<div className="flex gap-3">
 										<Input
 											{...field}
 											className="col-span-3"
@@ -109,10 +130,22 @@ export default function GenerateIdea() {
 										</Button>
 									</div>
 								</FormControl>
-								<FormMessage className="col-start-2 col-span-3" />
+								{/* Display the interests list */}
+								<DisplayInterest interests={interestsList} />
 							</FormItem>
 						)}
 					/>
+
+					<div className="flex items-center justify-center">
+						<Button
+							type="submit"
+							disabled={loading}
+							className="cursor-pointer rounded-full"
+						>
+							<Sparkles size={20} />
+							Generate Idea
+						</Button>
+					</div>
 				</form>
 			</Form>
 		</div>

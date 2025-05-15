@@ -38,6 +38,11 @@ export type ProjectIdea = $Result.DefaultSelection<Prisma.$ProjectIdeaPayload>
  * 
  */
 export type Favorite = $Result.DefaultSelection<Prisma.$FavoritePayload>
+/**
+ * Model ProjectIdeaChat
+ * 
+ */
+export type ProjectIdeaChat = $Result.DefaultSelection<Prisma.$ProjectIdeaChatPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -213,6 +218,16 @@ export class PrismaClient<
     * ```
     */
   get favorite(): Prisma.FavoriteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.projectIdeaChat`: Exposes CRUD operations for the **ProjectIdeaChat** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProjectIdeaChats
+    * const projectIdeaChats = await prisma.projectIdeaChat.findMany()
+    * ```
+    */
+  get projectIdeaChat(): Prisma.ProjectIdeaChatDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -657,7 +672,8 @@ export namespace Prisma {
     Skill: 'Skill',
     Interest: 'Interest',
     ProjectIdea: 'ProjectIdea',
-    Favorite: 'Favorite'
+    Favorite: 'Favorite',
+    ProjectIdeaChat: 'ProjectIdeaChat'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -676,7 +692,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "skill" | "interest" | "projectIdea" | "favorite"
+      modelProps: "user" | "skill" | "interest" | "projectIdea" | "favorite" | "projectIdeaChat"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1050,6 +1066,80 @@ export namespace Prisma {
           }
         }
       }
+      ProjectIdeaChat: {
+        payload: Prisma.$ProjectIdeaChatPayload<ExtArgs>
+        fields: Prisma.ProjectIdeaChatFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProjectIdeaChatFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProjectIdeaChatFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload>
+          }
+          findFirst: {
+            args: Prisma.ProjectIdeaChatFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProjectIdeaChatFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload>
+          }
+          findMany: {
+            args: Prisma.ProjectIdeaChatFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload>[]
+          }
+          create: {
+            args: Prisma.ProjectIdeaChatCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload>
+          }
+          createMany: {
+            args: Prisma.ProjectIdeaChatCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProjectIdeaChatCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload>[]
+          }
+          delete: {
+            args: Prisma.ProjectIdeaChatDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload>
+          }
+          update: {
+            args: Prisma.ProjectIdeaChatUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProjectIdeaChatDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProjectIdeaChatUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProjectIdeaChatUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProjectIdeaChatUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProjectIdeaChatPayload>
+          }
+          aggregate: {
+            args: Prisma.ProjectIdeaChatAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProjectIdeaChat>
+          }
+          groupBy: {
+            args: Prisma.ProjectIdeaChatGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProjectIdeaChatGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProjectIdeaChatCountArgs<ExtArgs>
+            result: $Utils.Optional<ProjectIdeaChatCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1139,6 +1229,7 @@ export namespace Prisma {
     interest?: InterestOmit
     projectIdea?: ProjectIdeaOmit
     favorite?: FavoriteOmit
+    projectIdeaChat?: ProjectIdeaChatOmit
   }
 
   /* Types for Logging */
@@ -1292,10 +1383,12 @@ export namespace Prisma {
 
   export type ProjectIdeaCountOutputType = {
     favorites: number
+    chat: number
   }
 
   export type ProjectIdeaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     favorites?: boolean | ProjectIdeaCountOutputTypeCountFavoritesArgs
+    chat?: boolean | ProjectIdeaCountOutputTypeCountChatArgs
   }
 
   // Custom InputTypes
@@ -1316,6 +1409,13 @@ export namespace Prisma {
     where?: FavoriteWhereInput
   }
 
+  /**
+   * ProjectIdeaCountOutputType without action
+   */
+  export type ProjectIdeaCountOutputTypeCountChatArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectIdeaChatWhereInput
+  }
+
 
   /**
    * Models
@@ -1334,18 +1434,21 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: string | null
     email: string | null
+    password: string | null
     createdAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: string | null
     email: string | null
+    password: string | null
     createdAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     email: number
+    password: number
     createdAt: number
     _all: number
   }
@@ -1354,18 +1457,21 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     email?: true
+    password?: true
     createdAt?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     email?: true
+    password?: true
     createdAt?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     email?: true
+    password?: true
     createdAt?: true
     _all?: true
   }
@@ -1444,7 +1550,8 @@ export namespace Prisma {
 
   export type UserGroupByOutputType = {
     id: string
-    email: string
+    email: string | null
+    password: string
     createdAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -1468,6 +1575,7 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
+    password?: boolean
     createdAt?: boolean
     skills?: boolean | User$skillsArgs<ExtArgs>
     interests?: boolean | User$interestsArgs<ExtArgs>
@@ -1479,22 +1587,25 @@ export namespace Prisma {
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
+    password?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
+    password?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     email?: boolean
+    password?: boolean
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     skills?: boolean | User$skillsArgs<ExtArgs>
     interests?: boolean | User$interestsArgs<ExtArgs>
@@ -1515,7 +1626,8 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      email: string
+      email: string | null
+      password: string
       createdAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1946,6 +2058,7 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -4670,7 +4783,7 @@ export namespace Prisma {
 
   export type ProjectIdeaGroupByOutputType = {
     id: string
-    publicId: string
+    publicId: string | null
     title: string
     description: string
     inputSkills: string[]
@@ -4711,6 +4824,7 @@ export namespace Prisma {
     isPublic?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     favorites?: boolean | ProjectIdea$favoritesArgs<ExtArgs>
+    chat?: boolean | ProjectIdea$chatArgs<ExtArgs>
     _count?: boolean | ProjectIdeaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["projectIdea"]>
 
@@ -4759,6 +4873,7 @@ export namespace Prisma {
   export type ProjectIdeaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     favorites?: boolean | ProjectIdea$favoritesArgs<ExtArgs>
+    chat?: boolean | ProjectIdea$chatArgs<ExtArgs>
     _count?: boolean | ProjectIdeaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProjectIdeaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4773,10 +4888,11 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       favorites: Prisma.$FavoritePayload<ExtArgs>[]
+      chat: Prisma.$ProjectIdeaChatPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      publicId: string
+      publicId: string | null
       title: string
       description: string
       inputSkills: string[]
@@ -5181,6 +5297,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     favorites<T extends ProjectIdea$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, ProjectIdea$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    chat<T extends ProjectIdea$chatArgs<ExtArgs> = {}>(args?: Subset<T, ProjectIdea$chatArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5637,6 +5754,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectIdea.chat
+   */
+  export type ProjectIdea$chatArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    where?: ProjectIdeaChatWhereInput
+    orderBy?: ProjectIdeaChatOrderByWithRelationInput | ProjectIdeaChatOrderByWithRelationInput[]
+    cursor?: ProjectIdeaChatWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProjectIdeaChatScalarFieldEnum | ProjectIdeaChatScalarFieldEnum[]
   }
 
   /**
@@ -6712,6 +6853,1064 @@ export namespace Prisma {
 
 
   /**
+   * Model ProjectIdeaChat
+   */
+
+  export type AggregateProjectIdeaChat = {
+    _count: ProjectIdeaChatCountAggregateOutputType | null
+    _min: ProjectIdeaChatMinAggregateOutputType | null
+    _max: ProjectIdeaChatMaxAggregateOutputType | null
+  }
+
+  export type ProjectIdeaChatMinAggregateOutputType = {
+    id: string | null
+    ideaId: string | null
+    sender: string | null
+    message: string | null
+    createdAt: Date | null
+  }
+
+  export type ProjectIdeaChatMaxAggregateOutputType = {
+    id: string | null
+    ideaId: string | null
+    sender: string | null
+    message: string | null
+    createdAt: Date | null
+  }
+
+  export type ProjectIdeaChatCountAggregateOutputType = {
+    id: number
+    ideaId: number
+    sender: number
+    message: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ProjectIdeaChatMinAggregateInputType = {
+    id?: true
+    ideaId?: true
+    sender?: true
+    message?: true
+    createdAt?: true
+  }
+
+  export type ProjectIdeaChatMaxAggregateInputType = {
+    id?: true
+    ideaId?: true
+    sender?: true
+    message?: true
+    createdAt?: true
+  }
+
+  export type ProjectIdeaChatCountAggregateInputType = {
+    id?: true
+    ideaId?: true
+    sender?: true
+    message?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ProjectIdeaChatAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectIdeaChat to aggregate.
+     */
+    where?: ProjectIdeaChatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectIdeaChats to fetch.
+     */
+    orderBy?: ProjectIdeaChatOrderByWithRelationInput | ProjectIdeaChatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProjectIdeaChatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectIdeaChats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectIdeaChats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProjectIdeaChats
+    **/
+    _count?: true | ProjectIdeaChatCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProjectIdeaChatMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProjectIdeaChatMaxAggregateInputType
+  }
+
+  export type GetProjectIdeaChatAggregateType<T extends ProjectIdeaChatAggregateArgs> = {
+        [P in keyof T & keyof AggregateProjectIdeaChat]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProjectIdeaChat[P]>
+      : GetScalarType<T[P], AggregateProjectIdeaChat[P]>
+  }
+
+
+
+
+  export type ProjectIdeaChatGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProjectIdeaChatWhereInput
+    orderBy?: ProjectIdeaChatOrderByWithAggregationInput | ProjectIdeaChatOrderByWithAggregationInput[]
+    by: ProjectIdeaChatScalarFieldEnum[] | ProjectIdeaChatScalarFieldEnum
+    having?: ProjectIdeaChatScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProjectIdeaChatCountAggregateInputType | true
+    _min?: ProjectIdeaChatMinAggregateInputType
+    _max?: ProjectIdeaChatMaxAggregateInputType
+  }
+
+  export type ProjectIdeaChatGroupByOutputType = {
+    id: string
+    ideaId: string
+    sender: string
+    message: string
+    createdAt: Date
+    _count: ProjectIdeaChatCountAggregateOutputType | null
+    _min: ProjectIdeaChatMinAggregateOutputType | null
+    _max: ProjectIdeaChatMaxAggregateOutputType | null
+  }
+
+  type GetProjectIdeaChatGroupByPayload<T extends ProjectIdeaChatGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProjectIdeaChatGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProjectIdeaChatGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProjectIdeaChatGroupByOutputType[P]>
+            : GetScalarType<T[P], ProjectIdeaChatGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProjectIdeaChatSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ideaId?: boolean
+    sender?: boolean
+    message?: boolean
+    createdAt?: boolean
+    idea?: boolean | ProjectIdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectIdeaChat"]>
+
+  export type ProjectIdeaChatSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ideaId?: boolean
+    sender?: boolean
+    message?: boolean
+    createdAt?: boolean
+    idea?: boolean | ProjectIdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectIdeaChat"]>
+
+  export type ProjectIdeaChatSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ideaId?: boolean
+    sender?: boolean
+    message?: boolean
+    createdAt?: boolean
+    idea?: boolean | ProjectIdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["projectIdeaChat"]>
+
+  export type ProjectIdeaChatSelectScalar = {
+    id?: boolean
+    ideaId?: boolean
+    sender?: boolean
+    message?: boolean
+    createdAt?: boolean
+  }
+
+  export type ProjectIdeaChatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ideaId" | "sender" | "message" | "createdAt", ExtArgs["result"]["projectIdeaChat"]>
+  export type ProjectIdeaChatInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    idea?: boolean | ProjectIdeaDefaultArgs<ExtArgs>
+  }
+  export type ProjectIdeaChatIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    idea?: boolean | ProjectIdeaDefaultArgs<ExtArgs>
+  }
+  export type ProjectIdeaChatIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    idea?: boolean | ProjectIdeaDefaultArgs<ExtArgs>
+  }
+
+  export type $ProjectIdeaChatPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProjectIdeaChat"
+    objects: {
+      idea: Prisma.$ProjectIdeaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      ideaId: string
+      sender: string
+      message: string
+      createdAt: Date
+    }, ExtArgs["result"]["projectIdeaChat"]>
+    composites: {}
+  }
+
+  type ProjectIdeaChatGetPayload<S extends boolean | null | undefined | ProjectIdeaChatDefaultArgs> = $Result.GetResult<Prisma.$ProjectIdeaChatPayload, S>
+
+  type ProjectIdeaChatCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProjectIdeaChatFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProjectIdeaChatCountAggregateInputType | true
+    }
+
+  export interface ProjectIdeaChatDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProjectIdeaChat'], meta: { name: 'ProjectIdeaChat' } }
+    /**
+     * Find zero or one ProjectIdeaChat that matches the filter.
+     * @param {ProjectIdeaChatFindUniqueArgs} args - Arguments to find a ProjectIdeaChat
+     * @example
+     * // Get one ProjectIdeaChat
+     * const projectIdeaChat = await prisma.projectIdeaChat.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProjectIdeaChatFindUniqueArgs>(args: SelectSubset<T, ProjectIdeaChatFindUniqueArgs<ExtArgs>>): Prisma__ProjectIdeaChatClient<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProjectIdeaChat that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProjectIdeaChatFindUniqueOrThrowArgs} args - Arguments to find a ProjectIdeaChat
+     * @example
+     * // Get one ProjectIdeaChat
+     * const projectIdeaChat = await prisma.projectIdeaChat.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProjectIdeaChatFindUniqueOrThrowArgs>(args: SelectSubset<T, ProjectIdeaChatFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProjectIdeaChatClient<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectIdeaChat that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectIdeaChatFindFirstArgs} args - Arguments to find a ProjectIdeaChat
+     * @example
+     * // Get one ProjectIdeaChat
+     * const projectIdeaChat = await prisma.projectIdeaChat.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProjectIdeaChatFindFirstArgs>(args?: SelectSubset<T, ProjectIdeaChatFindFirstArgs<ExtArgs>>): Prisma__ProjectIdeaChatClient<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProjectIdeaChat that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectIdeaChatFindFirstOrThrowArgs} args - Arguments to find a ProjectIdeaChat
+     * @example
+     * // Get one ProjectIdeaChat
+     * const projectIdeaChat = await prisma.projectIdeaChat.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProjectIdeaChatFindFirstOrThrowArgs>(args?: SelectSubset<T, ProjectIdeaChatFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProjectIdeaChatClient<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProjectIdeaChats that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectIdeaChatFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProjectIdeaChats
+     * const projectIdeaChats = await prisma.projectIdeaChat.findMany()
+     * 
+     * // Get first 10 ProjectIdeaChats
+     * const projectIdeaChats = await prisma.projectIdeaChat.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const projectIdeaChatWithIdOnly = await prisma.projectIdeaChat.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProjectIdeaChatFindManyArgs>(args?: SelectSubset<T, ProjectIdeaChatFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProjectIdeaChat.
+     * @param {ProjectIdeaChatCreateArgs} args - Arguments to create a ProjectIdeaChat.
+     * @example
+     * // Create one ProjectIdeaChat
+     * const ProjectIdeaChat = await prisma.projectIdeaChat.create({
+     *   data: {
+     *     // ... data to create a ProjectIdeaChat
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProjectIdeaChatCreateArgs>(args: SelectSubset<T, ProjectIdeaChatCreateArgs<ExtArgs>>): Prisma__ProjectIdeaChatClient<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProjectIdeaChats.
+     * @param {ProjectIdeaChatCreateManyArgs} args - Arguments to create many ProjectIdeaChats.
+     * @example
+     * // Create many ProjectIdeaChats
+     * const projectIdeaChat = await prisma.projectIdeaChat.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProjectIdeaChatCreateManyArgs>(args?: SelectSubset<T, ProjectIdeaChatCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProjectIdeaChats and returns the data saved in the database.
+     * @param {ProjectIdeaChatCreateManyAndReturnArgs} args - Arguments to create many ProjectIdeaChats.
+     * @example
+     * // Create many ProjectIdeaChats
+     * const projectIdeaChat = await prisma.projectIdeaChat.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProjectIdeaChats and only return the `id`
+     * const projectIdeaChatWithIdOnly = await prisma.projectIdeaChat.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProjectIdeaChatCreateManyAndReturnArgs>(args?: SelectSubset<T, ProjectIdeaChatCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProjectIdeaChat.
+     * @param {ProjectIdeaChatDeleteArgs} args - Arguments to delete one ProjectIdeaChat.
+     * @example
+     * // Delete one ProjectIdeaChat
+     * const ProjectIdeaChat = await prisma.projectIdeaChat.delete({
+     *   where: {
+     *     // ... filter to delete one ProjectIdeaChat
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProjectIdeaChatDeleteArgs>(args: SelectSubset<T, ProjectIdeaChatDeleteArgs<ExtArgs>>): Prisma__ProjectIdeaChatClient<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProjectIdeaChat.
+     * @param {ProjectIdeaChatUpdateArgs} args - Arguments to update one ProjectIdeaChat.
+     * @example
+     * // Update one ProjectIdeaChat
+     * const projectIdeaChat = await prisma.projectIdeaChat.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProjectIdeaChatUpdateArgs>(args: SelectSubset<T, ProjectIdeaChatUpdateArgs<ExtArgs>>): Prisma__ProjectIdeaChatClient<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProjectIdeaChats.
+     * @param {ProjectIdeaChatDeleteManyArgs} args - Arguments to filter ProjectIdeaChats to delete.
+     * @example
+     * // Delete a few ProjectIdeaChats
+     * const { count } = await prisma.projectIdeaChat.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProjectIdeaChatDeleteManyArgs>(args?: SelectSubset<T, ProjectIdeaChatDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectIdeaChats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectIdeaChatUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProjectIdeaChats
+     * const projectIdeaChat = await prisma.projectIdeaChat.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProjectIdeaChatUpdateManyArgs>(args: SelectSubset<T, ProjectIdeaChatUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProjectIdeaChats and returns the data updated in the database.
+     * @param {ProjectIdeaChatUpdateManyAndReturnArgs} args - Arguments to update many ProjectIdeaChats.
+     * @example
+     * // Update many ProjectIdeaChats
+     * const projectIdeaChat = await prisma.projectIdeaChat.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProjectIdeaChats and only return the `id`
+     * const projectIdeaChatWithIdOnly = await prisma.projectIdeaChat.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProjectIdeaChatUpdateManyAndReturnArgs>(args: SelectSubset<T, ProjectIdeaChatUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProjectIdeaChat.
+     * @param {ProjectIdeaChatUpsertArgs} args - Arguments to update or create a ProjectIdeaChat.
+     * @example
+     * // Update or create a ProjectIdeaChat
+     * const projectIdeaChat = await prisma.projectIdeaChat.upsert({
+     *   create: {
+     *     // ... data to create a ProjectIdeaChat
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProjectIdeaChat we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProjectIdeaChatUpsertArgs>(args: SelectSubset<T, ProjectIdeaChatUpsertArgs<ExtArgs>>): Prisma__ProjectIdeaChatClient<$Result.GetResult<Prisma.$ProjectIdeaChatPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProjectIdeaChats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectIdeaChatCountArgs} args - Arguments to filter ProjectIdeaChats to count.
+     * @example
+     * // Count the number of ProjectIdeaChats
+     * const count = await prisma.projectIdeaChat.count({
+     *   where: {
+     *     // ... the filter for the ProjectIdeaChats we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProjectIdeaChatCountArgs>(
+      args?: Subset<T, ProjectIdeaChatCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProjectIdeaChatCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProjectIdeaChat.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectIdeaChatAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProjectIdeaChatAggregateArgs>(args: Subset<T, ProjectIdeaChatAggregateArgs>): Prisma.PrismaPromise<GetProjectIdeaChatAggregateType<T>>
+
+    /**
+     * Group by ProjectIdeaChat.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProjectIdeaChatGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProjectIdeaChatGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProjectIdeaChatGroupByArgs['orderBy'] }
+        : { orderBy?: ProjectIdeaChatGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProjectIdeaChatGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProjectIdeaChatGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProjectIdeaChat model
+   */
+  readonly fields: ProjectIdeaChatFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProjectIdeaChat.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProjectIdeaChatClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    idea<T extends ProjectIdeaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProjectIdeaDefaultArgs<ExtArgs>>): Prisma__ProjectIdeaClient<$Result.GetResult<Prisma.$ProjectIdeaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProjectIdeaChat model
+   */
+  interface ProjectIdeaChatFieldRefs {
+    readonly id: FieldRef<"ProjectIdeaChat", 'String'>
+    readonly ideaId: FieldRef<"ProjectIdeaChat", 'String'>
+    readonly sender: FieldRef<"ProjectIdeaChat", 'String'>
+    readonly message: FieldRef<"ProjectIdeaChat", 'String'>
+    readonly createdAt: FieldRef<"ProjectIdeaChat", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProjectIdeaChat findUnique
+   */
+  export type ProjectIdeaChatFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectIdeaChat to fetch.
+     */
+    where: ProjectIdeaChatWhereUniqueInput
+  }
+
+  /**
+   * ProjectIdeaChat findUniqueOrThrow
+   */
+  export type ProjectIdeaChatFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectIdeaChat to fetch.
+     */
+    where: ProjectIdeaChatWhereUniqueInput
+  }
+
+  /**
+   * ProjectIdeaChat findFirst
+   */
+  export type ProjectIdeaChatFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectIdeaChat to fetch.
+     */
+    where?: ProjectIdeaChatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectIdeaChats to fetch.
+     */
+    orderBy?: ProjectIdeaChatOrderByWithRelationInput | ProjectIdeaChatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectIdeaChats.
+     */
+    cursor?: ProjectIdeaChatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectIdeaChats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectIdeaChats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectIdeaChats.
+     */
+    distinct?: ProjectIdeaChatScalarFieldEnum | ProjectIdeaChatScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectIdeaChat findFirstOrThrow
+   */
+  export type ProjectIdeaChatFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectIdeaChat to fetch.
+     */
+    where?: ProjectIdeaChatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectIdeaChats to fetch.
+     */
+    orderBy?: ProjectIdeaChatOrderByWithRelationInput | ProjectIdeaChatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProjectIdeaChats.
+     */
+    cursor?: ProjectIdeaChatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectIdeaChats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectIdeaChats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProjectIdeaChats.
+     */
+    distinct?: ProjectIdeaChatScalarFieldEnum | ProjectIdeaChatScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectIdeaChat findMany
+   */
+  export type ProjectIdeaChatFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    /**
+     * Filter, which ProjectIdeaChats to fetch.
+     */
+    where?: ProjectIdeaChatWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProjectIdeaChats to fetch.
+     */
+    orderBy?: ProjectIdeaChatOrderByWithRelationInput | ProjectIdeaChatOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProjectIdeaChats.
+     */
+    cursor?: ProjectIdeaChatWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProjectIdeaChats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProjectIdeaChats.
+     */
+    skip?: number
+    distinct?: ProjectIdeaChatScalarFieldEnum | ProjectIdeaChatScalarFieldEnum[]
+  }
+
+  /**
+   * ProjectIdeaChat create
+   */
+  export type ProjectIdeaChatCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProjectIdeaChat.
+     */
+    data: XOR<ProjectIdeaChatCreateInput, ProjectIdeaChatUncheckedCreateInput>
+  }
+
+  /**
+   * ProjectIdeaChat createMany
+   */
+  export type ProjectIdeaChatCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProjectIdeaChats.
+     */
+    data: ProjectIdeaChatCreateManyInput | ProjectIdeaChatCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProjectIdeaChat createManyAndReturn
+   */
+  export type ProjectIdeaChatCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProjectIdeaChats.
+     */
+    data: ProjectIdeaChatCreateManyInput | ProjectIdeaChatCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProjectIdeaChat update
+   */
+  export type ProjectIdeaChatUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProjectIdeaChat.
+     */
+    data: XOR<ProjectIdeaChatUpdateInput, ProjectIdeaChatUncheckedUpdateInput>
+    /**
+     * Choose, which ProjectIdeaChat to update.
+     */
+    where: ProjectIdeaChatWhereUniqueInput
+  }
+
+  /**
+   * ProjectIdeaChat updateMany
+   */
+  export type ProjectIdeaChatUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProjectIdeaChats.
+     */
+    data: XOR<ProjectIdeaChatUpdateManyMutationInput, ProjectIdeaChatUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectIdeaChats to update
+     */
+    where?: ProjectIdeaChatWhereInput
+    /**
+     * Limit how many ProjectIdeaChats to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectIdeaChat updateManyAndReturn
+   */
+  export type ProjectIdeaChatUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * The data used to update ProjectIdeaChats.
+     */
+    data: XOR<ProjectIdeaChatUpdateManyMutationInput, ProjectIdeaChatUncheckedUpdateManyInput>
+    /**
+     * Filter which ProjectIdeaChats to update
+     */
+    where?: ProjectIdeaChatWhereInput
+    /**
+     * Limit how many ProjectIdeaChats to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProjectIdeaChat upsert
+   */
+  export type ProjectIdeaChatUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProjectIdeaChat to update in case it exists.
+     */
+    where: ProjectIdeaChatWhereUniqueInput
+    /**
+     * In case the ProjectIdeaChat found by the `where` argument doesn't exist, create a new ProjectIdeaChat with this data.
+     */
+    create: XOR<ProjectIdeaChatCreateInput, ProjectIdeaChatUncheckedCreateInput>
+    /**
+     * In case the ProjectIdeaChat was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProjectIdeaChatUpdateInput, ProjectIdeaChatUncheckedUpdateInput>
+  }
+
+  /**
+   * ProjectIdeaChat delete
+   */
+  export type ProjectIdeaChatDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+    /**
+     * Filter which ProjectIdeaChat to delete.
+     */
+    where: ProjectIdeaChatWhereUniqueInput
+  }
+
+  /**
+   * ProjectIdeaChat deleteMany
+   */
+  export type ProjectIdeaChatDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProjectIdeaChats to delete
+     */
+    where?: ProjectIdeaChatWhereInput
+    /**
+     * Limit how many ProjectIdeaChats to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProjectIdeaChat without action
+   */
+  export type ProjectIdeaChatDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProjectIdeaChat
+     */
+    select?: ProjectIdeaChatSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProjectIdeaChat
+     */
+    omit?: ProjectIdeaChatOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProjectIdeaChatInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -6728,6 +7927,7 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     email: 'email',
+    password: 'password',
     createdAt: 'createdAt'
   };
 
@@ -6778,6 +7978,17 @@ export namespace Prisma {
   export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
 
 
+  export const ProjectIdeaChatScalarFieldEnum: {
+    id: 'id',
+    ideaId: 'ideaId',
+    sender: 'sender',
+    message: 'message',
+    createdAt: 'createdAt'
+  };
+
+  export type ProjectIdeaChatScalarFieldEnum = (typeof ProjectIdeaChatScalarFieldEnum)[keyof typeof ProjectIdeaChatScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -6792,6 +8003,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -6856,7 +8075,8 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     id?: StringFilter<"User"> | string
-    email?: StringFilter<"User"> | string
+    email?: StringNullableFilter<"User"> | string | null
+    password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     skills?: SkillListRelationFilter
     interests?: InterestListRelationFilter
@@ -6866,7 +8086,8 @@ export namespace Prisma {
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
-    email?: SortOrder
+    email?: SortOrderInput | SortOrder
+    password?: SortOrder
     createdAt?: SortOrder
     skills?: SkillOrderByRelationAggregateInput
     interests?: InterestOrderByRelationAggregateInput
@@ -6880,6 +8101,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
+    password?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     skills?: SkillListRelationFilter
     interests?: InterestListRelationFilter
@@ -6889,7 +8111,8 @@ export namespace Prisma {
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
-    email?: SortOrder
+    email?: SortOrderInput | SortOrder
+    password?: SortOrder
     createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -6901,7 +8124,8 @@ export namespace Prisma {
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"User"> | string
-    email?: StringWithAggregatesFilter<"User"> | string
+    email?: StringNullableWithAggregatesFilter<"User"> | string | null
+    password?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -7000,7 +8224,7 @@ export namespace Prisma {
     OR?: ProjectIdeaWhereInput[]
     NOT?: ProjectIdeaWhereInput | ProjectIdeaWhereInput[]
     id?: StringFilter<"ProjectIdea"> | string
-    publicId?: StringFilter<"ProjectIdea"> | string
+    publicId?: StringNullableFilter<"ProjectIdea"> | string | null
     title?: StringFilter<"ProjectIdea"> | string
     description?: StringFilter<"ProjectIdea"> | string
     inputSkills?: StringNullableListFilter<"ProjectIdea">
@@ -7011,11 +8235,12 @@ export namespace Prisma {
     isPublic?: BoolFilter<"ProjectIdea"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     favorites?: FavoriteListRelationFilter
+    chat?: ProjectIdeaChatListRelationFilter
   }
 
   export type ProjectIdeaOrderByWithRelationInput = {
     id?: SortOrder
-    publicId?: SortOrder
+    publicId?: SortOrderInput | SortOrder
     title?: SortOrder
     description?: SortOrder
     inputSkills?: SortOrder
@@ -7026,6 +8251,7 @@ export namespace Prisma {
     isPublic?: SortOrder
     user?: UserOrderByWithRelationInput
     favorites?: FavoriteOrderByRelationAggregateInput
+    chat?: ProjectIdeaChatOrderByRelationAggregateInput
   }
 
   export type ProjectIdeaWhereUniqueInput = Prisma.AtLeast<{
@@ -7044,11 +8270,12 @@ export namespace Prisma {
     isPublic?: BoolFilter<"ProjectIdea"> | boolean
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     favorites?: FavoriteListRelationFilter
+    chat?: ProjectIdeaChatListRelationFilter
   }, "id" | "publicId">
 
   export type ProjectIdeaOrderByWithAggregationInput = {
     id?: SortOrder
-    publicId?: SortOrder
+    publicId?: SortOrderInput | SortOrder
     title?: SortOrder
     description?: SortOrder
     inputSkills?: SortOrder
@@ -7067,7 +8294,7 @@ export namespace Prisma {
     OR?: ProjectIdeaScalarWhereWithAggregatesInput[]
     NOT?: ProjectIdeaScalarWhereWithAggregatesInput | ProjectIdeaScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ProjectIdea"> | string
-    publicId?: StringWithAggregatesFilter<"ProjectIdea"> | string
+    publicId?: StringNullableWithAggregatesFilter<"ProjectIdea"> | string | null
     title?: StringWithAggregatesFilter<"ProjectIdea"> | string
     description?: StringWithAggregatesFilter<"ProjectIdea"> | string
     inputSkills?: StringNullableListFilter<"ProjectIdea">
@@ -7131,9 +8358,65 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Favorite"> | Date | string
   }
 
+  export type ProjectIdeaChatWhereInput = {
+    AND?: ProjectIdeaChatWhereInput | ProjectIdeaChatWhereInput[]
+    OR?: ProjectIdeaChatWhereInput[]
+    NOT?: ProjectIdeaChatWhereInput | ProjectIdeaChatWhereInput[]
+    id?: StringFilter<"ProjectIdeaChat"> | string
+    ideaId?: StringFilter<"ProjectIdeaChat"> | string
+    sender?: StringFilter<"ProjectIdeaChat"> | string
+    message?: StringFilter<"ProjectIdeaChat"> | string
+    createdAt?: DateTimeFilter<"ProjectIdeaChat"> | Date | string
+    idea?: XOR<ProjectIdeaScalarRelationFilter, ProjectIdeaWhereInput>
+  }
+
+  export type ProjectIdeaChatOrderByWithRelationInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    sender?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+    idea?: ProjectIdeaOrderByWithRelationInput
+  }
+
+  export type ProjectIdeaChatWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ProjectIdeaChatWhereInput | ProjectIdeaChatWhereInput[]
+    OR?: ProjectIdeaChatWhereInput[]
+    NOT?: ProjectIdeaChatWhereInput | ProjectIdeaChatWhereInput[]
+    ideaId?: StringFilter<"ProjectIdeaChat"> | string
+    sender?: StringFilter<"ProjectIdeaChat"> | string
+    message?: StringFilter<"ProjectIdeaChat"> | string
+    createdAt?: DateTimeFilter<"ProjectIdeaChat"> | Date | string
+    idea?: XOR<ProjectIdeaScalarRelationFilter, ProjectIdeaWhereInput>
+  }, "id">
+
+  export type ProjectIdeaChatOrderByWithAggregationInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    sender?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+    _count?: ProjectIdeaChatCountOrderByAggregateInput
+    _max?: ProjectIdeaChatMaxOrderByAggregateInput
+    _min?: ProjectIdeaChatMinOrderByAggregateInput
+  }
+
+  export type ProjectIdeaChatScalarWhereWithAggregatesInput = {
+    AND?: ProjectIdeaChatScalarWhereWithAggregatesInput | ProjectIdeaChatScalarWhereWithAggregatesInput[]
+    OR?: ProjectIdeaChatScalarWhereWithAggregatesInput[]
+    NOT?: ProjectIdeaChatScalarWhereWithAggregatesInput | ProjectIdeaChatScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProjectIdeaChat"> | string
+    ideaId?: StringWithAggregatesFilter<"ProjectIdeaChat"> | string
+    sender?: StringWithAggregatesFilter<"ProjectIdeaChat"> | string
+    message?: StringWithAggregatesFilter<"ProjectIdeaChat"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ProjectIdeaChat"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     skills?: SkillCreateNestedManyWithoutUserInput
     interests?: InterestCreateNestedManyWithoutUserInput
@@ -7143,7 +8426,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     skills?: SkillUncheckedCreateNestedManyWithoutUserInput
     interests?: InterestUncheckedCreateNestedManyWithoutUserInput
@@ -7153,7 +8437,8 @@ export namespace Prisma {
 
   export type UserUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skills?: SkillUpdateManyWithoutUserNestedInput
     interests?: InterestUpdateManyWithoutUserNestedInput
@@ -7163,7 +8448,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skills?: SkillUncheckedUpdateManyWithoutUserNestedInput
     interests?: InterestUncheckedUpdateManyWithoutUserNestedInput
@@ -7173,19 +8459,22 @@ export namespace Prisma {
 
   export type UserCreateManyInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -7273,7 +8562,7 @@ export namespace Prisma {
 
   export type ProjectIdeaCreateInput = {
     id?: string
-    publicId?: string
+    publicId?: string | null
     title: string
     description: string
     inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
@@ -7283,11 +8572,12 @@ export namespace Prisma {
     isPublic?: boolean
     user: UserCreateNestedOneWithoutIdeasInput
     favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    chat?: ProjectIdeaChatCreateNestedManyWithoutIdeaInput
   }
 
   export type ProjectIdeaUncheckedCreateInput = {
     id?: string
-    publicId?: string
+    publicId?: string | null
     title: string
     description: string
     inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
@@ -7297,11 +8587,12 @@ export namespace Prisma {
     isFavorite?: boolean
     isPublic?: boolean
     favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    chat?: ProjectIdeaChatUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type ProjectIdeaUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    publicId?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
@@ -7311,11 +8602,12 @@ export namespace Prisma {
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutIdeasNestedInput
     favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    chat?: ProjectIdeaChatUpdateManyWithoutIdeaNestedInput
   }
 
   export type ProjectIdeaUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    publicId?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
@@ -7325,11 +8617,12 @@ export namespace Prisma {
     isFavorite?: BoolFieldUpdateOperationsInput | boolean
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    chat?: ProjectIdeaChatUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type ProjectIdeaCreateManyInput = {
     id?: string
-    publicId?: string
+    publicId?: string | null
     title: string
     description: string
     inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
@@ -7342,7 +8635,7 @@ export namespace Prisma {
 
   export type ProjectIdeaUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    publicId?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
@@ -7354,7 +8647,7 @@ export namespace Prisma {
 
   export type ProjectIdeaUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    publicId?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
@@ -7412,6 +8705,61 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ProjectIdeaChatCreateInput = {
+    id?: string
+    sender: string
+    message: string
+    createdAt?: Date | string
+    idea: ProjectIdeaCreateNestedOneWithoutChatInput
+  }
+
+  export type ProjectIdeaChatUncheckedCreateInput = {
+    id?: string
+    ideaId: string
+    sender: string
+    message: string
+    createdAt?: Date | string
+  }
+
+  export type ProjectIdeaChatUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sender?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    idea?: ProjectIdeaUpdateOneRequiredWithoutChatNestedInput
+  }
+
+  export type ProjectIdeaChatUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    sender?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectIdeaChatCreateManyInput = {
+    id?: string
+    ideaId: string
+    sender: string
+    message: string
+    createdAt?: Date | string
+  }
+
+  export type ProjectIdeaChatUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sender?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectIdeaChatUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    sender?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -7425,6 +8773,21 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -7462,6 +8825,11 @@ export namespace Prisma {
     none?: FavoriteWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type SkillOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -7481,18 +8849,21 @@ export namespace Prisma {
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     createdAt?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     createdAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -7512,6 +8883,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -7580,6 +8969,16 @@ export namespace Prisma {
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type ProjectIdeaChatListRelationFilter = {
+    every?: ProjectIdeaChatWhereInput
+    some?: ProjectIdeaChatWhereInput
+    none?: ProjectIdeaChatWhereInput
+  }
+
+  export type ProjectIdeaChatOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ProjectIdeaCountOrderByAggregateInput = {
@@ -7651,6 +9050,30 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type ProjectIdeaChatCountOrderByAggregateInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    sender?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ProjectIdeaChatMaxOrderByAggregateInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    sender?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ProjectIdeaChatMinOrderByAggregateInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    sender?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type SkillCreateNestedManyWithoutUserInput = {
     create?: XOR<SkillCreateWithoutUserInput, SkillUncheckedCreateWithoutUserInput> | SkillCreateWithoutUserInput[] | SkillUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SkillCreateOrConnectWithoutUserInput | SkillCreateOrConnectWithoutUserInput[]
@@ -7709,6 +9132,10 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -7876,11 +9303,25 @@ export namespace Prisma {
     connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
   }
 
+  export type ProjectIdeaChatCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<ProjectIdeaChatCreateWithoutIdeaInput, ProjectIdeaChatUncheckedCreateWithoutIdeaInput> | ProjectIdeaChatCreateWithoutIdeaInput[] | ProjectIdeaChatUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: ProjectIdeaChatCreateOrConnectWithoutIdeaInput | ProjectIdeaChatCreateOrConnectWithoutIdeaInput[]
+    createMany?: ProjectIdeaChatCreateManyIdeaInputEnvelope
+    connect?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
+  }
+
   export type FavoriteUncheckedCreateNestedManyWithoutIdeaInput = {
     create?: XOR<FavoriteCreateWithoutIdeaInput, FavoriteUncheckedCreateWithoutIdeaInput> | FavoriteCreateWithoutIdeaInput[] | FavoriteUncheckedCreateWithoutIdeaInput[]
     connectOrCreate?: FavoriteCreateOrConnectWithoutIdeaInput | FavoriteCreateOrConnectWithoutIdeaInput[]
     createMany?: FavoriteCreateManyIdeaInputEnvelope
     connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+  }
+
+  export type ProjectIdeaChatUncheckedCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<ProjectIdeaChatCreateWithoutIdeaInput, ProjectIdeaChatUncheckedCreateWithoutIdeaInput> | ProjectIdeaChatCreateWithoutIdeaInput[] | ProjectIdeaChatUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: ProjectIdeaChatCreateOrConnectWithoutIdeaInput | ProjectIdeaChatCreateOrConnectWithoutIdeaInput[]
+    createMany?: ProjectIdeaChatCreateManyIdeaInputEnvelope
+    connect?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
   }
 
   export type ProjectIdeaUpdateinputSkillsInput = {
@@ -7919,6 +9360,20 @@ export namespace Prisma {
     deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
   }
 
+  export type ProjectIdeaChatUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<ProjectIdeaChatCreateWithoutIdeaInput, ProjectIdeaChatUncheckedCreateWithoutIdeaInput> | ProjectIdeaChatCreateWithoutIdeaInput[] | ProjectIdeaChatUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: ProjectIdeaChatCreateOrConnectWithoutIdeaInput | ProjectIdeaChatCreateOrConnectWithoutIdeaInput[]
+    upsert?: ProjectIdeaChatUpsertWithWhereUniqueWithoutIdeaInput | ProjectIdeaChatUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: ProjectIdeaChatCreateManyIdeaInputEnvelope
+    set?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
+    disconnect?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
+    delete?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
+    connect?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
+    update?: ProjectIdeaChatUpdateWithWhereUniqueWithoutIdeaInput | ProjectIdeaChatUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: ProjectIdeaChatUpdateManyWithWhereWithoutIdeaInput | ProjectIdeaChatUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: ProjectIdeaChatScalarWhereInput | ProjectIdeaChatScalarWhereInput[]
+  }
+
   export type FavoriteUncheckedUpdateManyWithoutIdeaNestedInput = {
     create?: XOR<FavoriteCreateWithoutIdeaInput, FavoriteUncheckedCreateWithoutIdeaInput> | FavoriteCreateWithoutIdeaInput[] | FavoriteUncheckedCreateWithoutIdeaInput[]
     connectOrCreate?: FavoriteCreateOrConnectWithoutIdeaInput | FavoriteCreateOrConnectWithoutIdeaInput[]
@@ -7931,6 +9386,20 @@ export namespace Prisma {
     update?: FavoriteUpdateWithWhereUniqueWithoutIdeaInput | FavoriteUpdateWithWhereUniqueWithoutIdeaInput[]
     updateMany?: FavoriteUpdateManyWithWhereWithoutIdeaInput | FavoriteUpdateManyWithWhereWithoutIdeaInput[]
     deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
+  }
+
+  export type ProjectIdeaChatUncheckedUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<ProjectIdeaChatCreateWithoutIdeaInput, ProjectIdeaChatUncheckedCreateWithoutIdeaInput> | ProjectIdeaChatCreateWithoutIdeaInput[] | ProjectIdeaChatUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: ProjectIdeaChatCreateOrConnectWithoutIdeaInput | ProjectIdeaChatCreateOrConnectWithoutIdeaInput[]
+    upsert?: ProjectIdeaChatUpsertWithWhereUniqueWithoutIdeaInput | ProjectIdeaChatUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: ProjectIdeaChatCreateManyIdeaInputEnvelope
+    set?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
+    disconnect?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
+    delete?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
+    connect?: ProjectIdeaChatWhereUniqueInput | ProjectIdeaChatWhereUniqueInput[]
+    update?: ProjectIdeaChatUpdateWithWhereUniqueWithoutIdeaInput | ProjectIdeaChatUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: ProjectIdeaChatUpdateManyWithWhereWithoutIdeaInput | ProjectIdeaChatUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: ProjectIdeaChatScalarWhereInput | ProjectIdeaChatScalarWhereInput[]
   }
 
   export type ProjectIdeaCreateNestedOneWithoutFavoritesInput = {
@@ -7961,6 +9430,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFavoritesInput, UserUpdateWithoutFavoritesInput>, UserUncheckedUpdateWithoutFavoritesInput>
   }
 
+  export type ProjectIdeaCreateNestedOneWithoutChatInput = {
+    create?: XOR<ProjectIdeaCreateWithoutChatInput, ProjectIdeaUncheckedCreateWithoutChatInput>
+    connectOrCreate?: ProjectIdeaCreateOrConnectWithoutChatInput
+    connect?: ProjectIdeaWhereUniqueInput
+  }
+
+  export type ProjectIdeaUpdateOneRequiredWithoutChatNestedInput = {
+    create?: XOR<ProjectIdeaCreateWithoutChatInput, ProjectIdeaUncheckedCreateWithoutChatInput>
+    connectOrCreate?: ProjectIdeaCreateOrConnectWithoutChatInput
+    upsert?: ProjectIdeaUpsertWithoutChatInput
+    connect?: ProjectIdeaWhereUniqueInput
+    update?: XOR<XOR<ProjectIdeaUpdateToOneWithWhereWithoutChatInput, ProjectIdeaUpdateWithoutChatInput>, ProjectIdeaUncheckedUpdateWithoutChatInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -7973,6 +9456,20 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -8012,6 +9509,34 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -8083,7 +9608,7 @@ export namespace Prisma {
 
   export type ProjectIdeaCreateWithoutUserInput = {
     id?: string
-    publicId?: string
+    publicId?: string | null
     title: string
     description: string
     inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
@@ -8092,11 +9617,12 @@ export namespace Prisma {
     isFavorite?: boolean
     isPublic?: boolean
     favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    chat?: ProjectIdeaChatCreateNestedManyWithoutIdeaInput
   }
 
   export type ProjectIdeaUncheckedCreateWithoutUserInput = {
     id?: string
-    publicId?: string
+    publicId?: string | null
     title: string
     description: string
     inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
@@ -8105,6 +9631,7 @@ export namespace Prisma {
     isFavorite?: boolean
     isPublic?: boolean
     favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    chat?: ProjectIdeaChatUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type ProjectIdeaCreateOrConnectWithoutUserInput = {
@@ -8210,7 +9737,7 @@ export namespace Prisma {
     OR?: ProjectIdeaScalarWhereInput[]
     NOT?: ProjectIdeaScalarWhereInput | ProjectIdeaScalarWhereInput[]
     id?: StringFilter<"ProjectIdea"> | string
-    publicId?: StringFilter<"ProjectIdea"> | string
+    publicId?: StringNullableFilter<"ProjectIdea"> | string | null
     title?: StringFilter<"ProjectIdea"> | string
     description?: StringFilter<"ProjectIdea"> | string
     inputSkills?: StringNullableListFilter<"ProjectIdea">
@@ -8249,7 +9776,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutSkillsInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     interests?: InterestCreateNestedManyWithoutUserInput
     ideas?: ProjectIdeaCreateNestedManyWithoutUserInput
@@ -8258,7 +9786,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutSkillsInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     interests?: InterestUncheckedCreateNestedManyWithoutUserInput
     ideas?: ProjectIdeaUncheckedCreateNestedManyWithoutUserInput
@@ -8283,7 +9812,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutSkillsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     interests?: InterestUpdateManyWithoutUserNestedInput
     ideas?: ProjectIdeaUpdateManyWithoutUserNestedInput
@@ -8292,7 +9822,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutSkillsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     interests?: InterestUncheckedUpdateManyWithoutUserNestedInput
     ideas?: ProjectIdeaUncheckedUpdateManyWithoutUserNestedInput
@@ -8301,7 +9832,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutInterestsInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     skills?: SkillCreateNestedManyWithoutUserInput
     ideas?: ProjectIdeaCreateNestedManyWithoutUserInput
@@ -8310,7 +9842,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutInterestsInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     skills?: SkillUncheckedCreateNestedManyWithoutUserInput
     ideas?: ProjectIdeaUncheckedCreateNestedManyWithoutUserInput
@@ -8335,7 +9868,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutInterestsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skills?: SkillUpdateManyWithoutUserNestedInput
     ideas?: ProjectIdeaUpdateManyWithoutUserNestedInput
@@ -8344,7 +9878,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutInterestsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skills?: SkillUncheckedUpdateManyWithoutUserNestedInput
     ideas?: ProjectIdeaUncheckedUpdateManyWithoutUserNestedInput
@@ -8353,7 +9888,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutIdeasInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     skills?: SkillCreateNestedManyWithoutUserInput
     interests?: InterestCreateNestedManyWithoutUserInput
@@ -8362,7 +9898,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutIdeasInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     skills?: SkillUncheckedCreateNestedManyWithoutUserInput
     interests?: InterestUncheckedCreateNestedManyWithoutUserInput
@@ -8396,6 +9933,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ProjectIdeaChatCreateWithoutIdeaInput = {
+    id?: string
+    sender: string
+    message: string
+    createdAt?: Date | string
+  }
+
+  export type ProjectIdeaChatUncheckedCreateWithoutIdeaInput = {
+    id?: string
+    sender: string
+    message: string
+    createdAt?: Date | string
+  }
+
+  export type ProjectIdeaChatCreateOrConnectWithoutIdeaInput = {
+    where: ProjectIdeaChatWhereUniqueInput
+    create: XOR<ProjectIdeaChatCreateWithoutIdeaInput, ProjectIdeaChatUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type ProjectIdeaChatCreateManyIdeaInputEnvelope = {
+    data: ProjectIdeaChatCreateManyIdeaInput | ProjectIdeaChatCreateManyIdeaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutIdeasInput = {
     update: XOR<UserUpdateWithoutIdeasInput, UserUncheckedUpdateWithoutIdeasInput>
     create: XOR<UserCreateWithoutIdeasInput, UserUncheckedCreateWithoutIdeasInput>
@@ -8409,7 +9970,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutIdeasInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skills?: SkillUpdateManyWithoutUserNestedInput
     interests?: InterestUpdateManyWithoutUserNestedInput
@@ -8418,7 +9980,8 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutIdeasInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skills?: SkillUncheckedUpdateManyWithoutUserNestedInput
     interests?: InterestUncheckedUpdateManyWithoutUserNestedInput
@@ -8441,9 +10004,36 @@ export namespace Prisma {
     data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyWithoutIdeaInput>
   }
 
+  export type ProjectIdeaChatUpsertWithWhereUniqueWithoutIdeaInput = {
+    where: ProjectIdeaChatWhereUniqueInput
+    update: XOR<ProjectIdeaChatUpdateWithoutIdeaInput, ProjectIdeaChatUncheckedUpdateWithoutIdeaInput>
+    create: XOR<ProjectIdeaChatCreateWithoutIdeaInput, ProjectIdeaChatUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type ProjectIdeaChatUpdateWithWhereUniqueWithoutIdeaInput = {
+    where: ProjectIdeaChatWhereUniqueInput
+    data: XOR<ProjectIdeaChatUpdateWithoutIdeaInput, ProjectIdeaChatUncheckedUpdateWithoutIdeaInput>
+  }
+
+  export type ProjectIdeaChatUpdateManyWithWhereWithoutIdeaInput = {
+    where: ProjectIdeaChatScalarWhereInput
+    data: XOR<ProjectIdeaChatUpdateManyMutationInput, ProjectIdeaChatUncheckedUpdateManyWithoutIdeaInput>
+  }
+
+  export type ProjectIdeaChatScalarWhereInput = {
+    AND?: ProjectIdeaChatScalarWhereInput | ProjectIdeaChatScalarWhereInput[]
+    OR?: ProjectIdeaChatScalarWhereInput[]
+    NOT?: ProjectIdeaChatScalarWhereInput | ProjectIdeaChatScalarWhereInput[]
+    id?: StringFilter<"ProjectIdeaChat"> | string
+    ideaId?: StringFilter<"ProjectIdeaChat"> | string
+    sender?: StringFilter<"ProjectIdeaChat"> | string
+    message?: StringFilter<"ProjectIdeaChat"> | string
+    createdAt?: DateTimeFilter<"ProjectIdeaChat"> | Date | string
+  }
+
   export type ProjectIdeaCreateWithoutFavoritesInput = {
     id?: string
-    publicId?: string
+    publicId?: string | null
     title: string
     description: string
     inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
@@ -8452,11 +10042,12 @@ export namespace Prisma {
     isFavorite?: boolean
     isPublic?: boolean
     user: UserCreateNestedOneWithoutIdeasInput
+    chat?: ProjectIdeaChatCreateNestedManyWithoutIdeaInput
   }
 
   export type ProjectIdeaUncheckedCreateWithoutFavoritesInput = {
     id?: string
-    publicId?: string
+    publicId?: string | null
     title: string
     description: string
     inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
@@ -8465,6 +10056,7 @@ export namespace Prisma {
     createdAt?: Date | string
     isFavorite?: boolean
     isPublic?: boolean
+    chat?: ProjectIdeaChatUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type ProjectIdeaCreateOrConnectWithoutFavoritesInput = {
@@ -8474,7 +10066,8 @@ export namespace Prisma {
 
   export type UserCreateWithoutFavoritesInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     skills?: SkillCreateNestedManyWithoutUserInput
     interests?: InterestCreateNestedManyWithoutUserInput
@@ -8483,7 +10076,8 @@ export namespace Prisma {
 
   export type UserUncheckedCreateWithoutFavoritesInput = {
     id?: string
-    email: string
+    email?: string | null
+    password: string
     createdAt?: Date | string
     skills?: SkillUncheckedCreateNestedManyWithoutUserInput
     interests?: InterestUncheckedCreateNestedManyWithoutUserInput
@@ -8508,7 +10102,7 @@ export namespace Prisma {
 
   export type ProjectIdeaUpdateWithoutFavoritesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    publicId?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
@@ -8517,11 +10111,12 @@ export namespace Prisma {
     isFavorite?: BoolFieldUpdateOperationsInput | boolean
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     user?: UserUpdateOneRequiredWithoutIdeasNestedInput
+    chat?: ProjectIdeaChatUpdateManyWithoutIdeaNestedInput
   }
 
   export type ProjectIdeaUncheckedUpdateWithoutFavoritesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    publicId?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
@@ -8530,6 +10125,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isFavorite?: BoolFieldUpdateOperationsInput | boolean
     isPublic?: BoolFieldUpdateOperationsInput | boolean
+    chat?: ProjectIdeaChatUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type UserUpsertWithoutFavoritesInput = {
@@ -8545,7 +10141,8 @@ export namespace Prisma {
 
   export type UserUpdateWithoutFavoritesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skills?: SkillUpdateManyWithoutUserNestedInput
     interests?: InterestUpdateManyWithoutUserNestedInput
@@ -8554,11 +10151,84 @@ export namespace Prisma {
 
   export type UserUncheckedUpdateWithoutFavoritesInput = {
     id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skills?: SkillUncheckedUpdateManyWithoutUserNestedInput
     interests?: InterestUncheckedUpdateManyWithoutUserNestedInput
     ideas?: ProjectIdeaUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ProjectIdeaCreateWithoutChatInput = {
+    id?: string
+    publicId?: string | null
+    title: string
+    description: string
+    inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
+    inputInterests?: ProjectIdeaCreateinputInterestsInput | string[]
+    createdAt?: Date | string
+    isFavorite?: boolean
+    isPublic?: boolean
+    user: UserCreateNestedOneWithoutIdeasInput
+    favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+  }
+
+  export type ProjectIdeaUncheckedCreateWithoutChatInput = {
+    id?: string
+    publicId?: string | null
+    title: string
+    description: string
+    inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
+    inputInterests?: ProjectIdeaCreateinputInterestsInput | string[]
+    userId: string
+    createdAt?: Date | string
+    isFavorite?: boolean
+    isPublic?: boolean
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+  }
+
+  export type ProjectIdeaCreateOrConnectWithoutChatInput = {
+    where: ProjectIdeaWhereUniqueInput
+    create: XOR<ProjectIdeaCreateWithoutChatInput, ProjectIdeaUncheckedCreateWithoutChatInput>
+  }
+
+  export type ProjectIdeaUpsertWithoutChatInput = {
+    update: XOR<ProjectIdeaUpdateWithoutChatInput, ProjectIdeaUncheckedUpdateWithoutChatInput>
+    create: XOR<ProjectIdeaCreateWithoutChatInput, ProjectIdeaUncheckedCreateWithoutChatInput>
+    where?: ProjectIdeaWhereInput
+  }
+
+  export type ProjectIdeaUpdateToOneWithWhereWithoutChatInput = {
+    where?: ProjectIdeaWhereInput
+    data: XOR<ProjectIdeaUpdateWithoutChatInput, ProjectIdeaUncheckedUpdateWithoutChatInput>
+  }
+
+  export type ProjectIdeaUpdateWithoutChatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
+    inputInterests?: ProjectIdeaUpdateinputInterestsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneRequiredWithoutIdeasNestedInput
+    favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+  }
+
+  export type ProjectIdeaUncheckedUpdateWithoutChatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
+    inputInterests?: ProjectIdeaUpdateinputInterestsInput | string[]
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isFavorite?: BoolFieldUpdateOperationsInput | boolean
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type SkillCreateManyUserInput = {
@@ -8573,7 +10243,7 @@ export namespace Prisma {
 
   export type ProjectIdeaCreateManyUserInput = {
     id?: string
-    publicId?: string
+    publicId?: string | null
     title: string
     description: string
     inputSkills?: ProjectIdeaCreateinputSkillsInput | string[]
@@ -8621,7 +10291,7 @@ export namespace Prisma {
 
   export type ProjectIdeaUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    publicId?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
@@ -8630,11 +10300,12 @@ export namespace Prisma {
     isFavorite?: BoolFieldUpdateOperationsInput | boolean
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    chat?: ProjectIdeaChatUpdateManyWithoutIdeaNestedInput
   }
 
   export type ProjectIdeaUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    publicId?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
@@ -8643,11 +10314,12 @@ export namespace Prisma {
     isFavorite?: BoolFieldUpdateOperationsInput | boolean
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    chat?: ProjectIdeaChatUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type ProjectIdeaUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    publicId?: StringFieldUpdateOperationsInput | string
+    publicId?: NullableStringFieldUpdateOperationsInput | string | null
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     inputSkills?: ProjectIdeaUpdateinputSkillsInput | string[]
@@ -8681,6 +10353,13 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type ProjectIdeaChatCreateManyIdeaInput = {
+    id?: string
+    sender: string
+    message: string
+    createdAt?: Date | string
+  }
+
   export type FavoriteUpdateWithoutIdeaInput = {
     id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8696,6 +10375,27 @@ export namespace Prisma {
   export type FavoriteUncheckedUpdateManyWithoutIdeaInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectIdeaChatUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sender?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectIdeaChatUncheckedUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sender?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProjectIdeaChatUncheckedUpdateManyWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sender?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
