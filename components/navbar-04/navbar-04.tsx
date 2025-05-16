@@ -4,14 +4,17 @@ import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
 import { ThemeToggle } from "../ThemeToggle";
 import Link from "next/link";
+import { Bug } from "lucide-react";
 
 const NavbarBuilder = () => {
 	return (
 		<div className="h-20 fixed top-0 inset-x-0">
-			<nav className="fixed top-3 inset-x-4 h-13 bg-background border dark:border-teal-700/70 shadow-2xl max-w-screen-xl mx-auto rounded-full">
+			<nav className="fixed top-3 inset-x-4 h-13 bg-background border dark:border-stone-700/70 shadow-2xl max-w-screen-xl mx-auto rounded-full">
 				<div className="h-full flex items-center justify-between mx-auto px-4 cursor-pointer">
-					<Link href="/">
-						<Logo />
+					<Link href="/" className="flex items-center gap-2">
+						{/* <Logo /> */}
+						<Bug className="ml-4 h-5 w-5" />
+						<span className="text-xl font-semibold">Builder</span>
 					</Link>
 
 					{/* Desktop Menu */}

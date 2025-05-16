@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
+import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Plus, Sparkles } from "lucide-react";
@@ -9,11 +9,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { DisplaySkills } from "./displaySkills";
-import { DisplayInterest } from "./dsiplayInterests";
+import { toast } from "sonner";
+import axios from "axios";
+import { DisplayInterest } from "./displayInterest";
 
 const formSchema = z.object({
-	skills: z.string().array(),
-	interests: z.string().array(),
+	skills: z.string().min(1, "Enter a skill").optional(),
+	interests: z.string().min(1, "Enter an interest").optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -24,125 +26,164 @@ export default function GenerateIdea() {
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 
-	const skillsList = (
-		<>
-			{skills.map((skill, index) => (
-				<li key={index} className="text-gray-800">
-					{skill}
-				</li>
-			))}
-		</>
-	);
-
-	const interestsList = (
-		<>
-			{interests.map((interest, index) => (
-				<li key={index} className="text-gray-800">
-					{interest}
-				</li>
-			))}
-		</>
-	);
-
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			skills: [""],
-			interests: [""],
+			skills: "",
+			interests: "",
 		},
 	});
 
-	const onSubmit = async (data: FormValues) => {
-		setLoading(true);
+	const addSkill = () => {
+		const skill = form.getValues("skills")?.trim();
+		if (skill && !skills.includes(skill)) {
+			setSkills([...skills, skill]);
+			form.setValue("skills", "");
+		}
+	};
 
+	const addInterest = () => {
+		const interest = form.getValues("interests")?.trim();
+		if (interest && !interests.includes(interest)) {
+			setInterests([...interests, interest]);
+			form.setValue("interests", "");
+		}
+	};
+
+	const onSubmit = async () => {
+		if (skills.length === 0 || interests.length === 0) {
+			toast.error("Please add at least one skill and one interest");
+			return;
+		}
+
+		setLoading(true);
 		try {
-			// Send the form data to the API
-			const response = await fetch("/api/idea", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					...data,
-					isPublic: false, // Default to private; adjust based on user input if needed
-				}),
+			const { data } = await axios.post("/api/generate", {
+				skills,
+				interests,
 			});
 
-			// Handle the response
-			if (!response.ok) {
-				throw new Error("Failed to create idea");
-			}
-
-			const idea = await response.json();
-
-			// Redirect to the idea page using the publicId
-			router.push(`/idea/${idea.publicId}`);
-		} catch (error) {
-			console.error("Error creating idea:", error);
+			toast.success("Ideas generated successfully!");
+			router.refresh();
+			// router.push("/dashboard"); // or navigate to the first idea using data.ideas[0].publicId
+		} catch (error: any) {
+			console.error("API Error:", error);
+			const message =
+				error.response?.data?.error || "Error generating ideas. Please try again.";
+			toast.error(message);
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	return (
-		<div className="container mx-auto px-4 mt-2">
+		<div className="container mx-auto px-4 py-10 max-w-2xl">
+			{/* Headline */}
+			<div className="text-center mb-10">
+				<h1 className="text-3xl font-bold tracking-tight text-foreground">
+					Tell us what you know and what excites you!
+				</h1>
+				<p className="text-muted-foreground mt-2">
+					Add the skills you have and your preferred fields of interest — we’ll craft an
+					idea just for you.
+				</p>
+			</div>
+
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-24 py-4">
-					{/* Skills */}
+				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-16">
+					{/* Skills Section */}
 					<FormField
 						control={form.control}
 						name="skills"
 						render={({ field }) => (
-							<FormItem className="col-span-4 flex flex-col gap-2">
+							<FormItem className="flex flex-col gap-2">
 								<FormControl>
 									<div className="flex gap-3">
 										<Input
 											{...field}
-											className="col-span-3"
-											placeholder="Add your skills"
+											className="flex-1"
+											placeholder="Add your skills (e.g. JavaScript, C++)"
+											onKeyDown={(e) => {
+												if (e.key === "Enter") {
+													e.preventDefault();
+													addSkill();
+												}
+											}}
 										/>
-										<Button type="submit">
+										<Button
+											type="button"
+											onClick={addSkill}
+											variant="secondary"
+										>
 											<Plus />
 										</Button>
 									</div>
 								</FormControl>
-								{/* Display the skills list */}
-								<DisplaySkills skills={skillsList} />
+
+								<DisplaySkills
+									skills={skills}
+									onRemove={(skill) =>
+										setSkills(skills.filter((s) => s !== skill))
+									}
+								/>
 							</FormItem>
 						)}
 					/>
 
-					{/* Interests */}
+					{/* Interests Section */}
 					<FormField
 						control={form.control}
 						name="interests"
 						render={({ field }) => (
-							<FormItem className="col-span-4 flex flex-col gap-2">
+							<FormItem className="flex flex-col gap-2">
 								<FormControl>
 									<div className="flex gap-3">
 										<Input
-											{...field}
-											className="col-span-3"
-											placeholder="Add your field of interests"
+											value={form.getValues("interests") || ""}
+											onChange={(e) =>
+												form.setValue("interests", e.target.value)
+											}
+											className="flex-1 rounded-md"
+											placeholder="Add your interests (e.g. AI, Web Dev)"
+											onKeyDown={(e) => {
+												if (e.key === "Enter") {
+													e.preventDefault();
+													addInterest();
+												}
+											}}
 										/>
-										<Button type="submit">
-											<Plus className="mr-2 h-5 w-5" />
+										<Button
+											type="button"
+											onClick={addInterest}
+											variant="secondary"
+										>
+											<Plus />
 										</Button>
 									</div>
 								</FormControl>
-								{/* Display the interests list */}
-								<DisplayInterest interests={interestsList} />
+
+								<DisplayInterest
+									interests={interests}
+									onRemove={(interest) =>
+										setInterests(interests.filter((i) => i !== interest))
+									}
+								/>
 							</FormItem>
 						)}
 					/>
 
-					<div className="flex items-center justify-center">
+					{/* Generate Button */}
+					<div className="flex justify-center pt-4">
 						<Button
 							type="submit"
 							disabled={loading}
-							className="cursor-pointer rounded-full"
+							className="cursor-pointer rounded-full px-6 py-2"
 						>
-							<Sparkles size={20} />
+							{loading ? (
+								<span className="animate-spin mr-2 h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+							) : (
+								<Sparkles className="mr-2 h-4 w-4" />
+							)}
 							Generate Idea
 						</Button>
 					</div>
